@@ -10,12 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Configurar Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+
+      - name: Ejecutar pruebas
+        run: |
+          python -m pip install -e . pytest
+          python -m pytest tests/ -v
 
       - name: Instalar herramienta Build
         run: python -m pip install build
@@ -24,7 +29,7 @@ jobs:
         run: python -m build
 
       - name: Guardar distribuciones
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: paquete-tienda
           path: dist/
@@ -35,12 +40,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Configurar Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
       - name: Descargar distribuciones
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: paquete-tienda
           path: dist/
